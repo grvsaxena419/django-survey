@@ -1,18 +1,11 @@
+from django.contrib.auth import get_user_model
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.translation import gettext_lazy as _
 
 from .survey import Survey
 
-try:
-    from django.conf import settings
-
-    if settings.AUTH_USER_MODEL:
-        user_model = settings.AUTH_USER_MODEL
-    else:
-        user_model = User
-except (ImportError, AttributeError):
-    user_model = User
+user_model = get_user_model()
 
 
 class Response(models.Model):

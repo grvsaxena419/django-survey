@@ -24,8 +24,8 @@ class CategoryInline(admin.TabularInline):
 
 
 class SurveyAdmin(admin.ModelAdmin):
-    list_display = ("name", "is_published", "need_logged_user", "template")
-    list_filter = ("is_published", "need_logged_user")
+    list_display = ("name", "status", "need_logged_user", "template")
+    list_filter = ("status", "need_logged_user")
     inlines = [CategoryInline, QuestionInline]
     actions = [make_published, Survey2Csv.export_as_csv, Survey2Tex.export_as_tex]
 

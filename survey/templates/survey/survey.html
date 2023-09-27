@@ -20,8 +20,7 @@
 {% endblock %}
 
 
-
-{% block body %}
+{% block localbody %}
 	<h1> {{survey.name}} </h1>
 	<div class="survey-description"> {{survey.description|safe}} </div>
 	<div>
@@ -74,5 +73,6 @@
         			>
 				{% endif %}
 		{% endif %}
-	</form></div>
+	</form>
+	</div>
 {% endblock %}

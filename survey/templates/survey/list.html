@@ -1,9 +1,8 @@
 {% extends 'survey/base.html' %}
 {% load i18n %}
 
-{% block body %}
+{% block localbody %}
 <div id="intro">
-	<h1>{% trans "Welcome to the Django Survey app"%}</h1>
     {% if messages %}
         <p>
             {% for message in messages %}

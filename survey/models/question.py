@@ -26,7 +26,7 @@ options for this question ."""
 
 
 def validate_choices(choices):
-    """Verifies that there is at least two choices in choices
+    """Verifies that there are at least two choices in choices
     :param String choices: The string representing the user choices.
     """
     values = choices.split(settings.CHOICES_SEPARATOR)

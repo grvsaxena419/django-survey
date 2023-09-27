@@ -2,10 +2,10 @@
 Permit to import everything from survey.models without knowing the details.
 """
 
-from .answer import Answer
-from .category import Category
-from .question import Question
-from .response import Response
-from .survey import Survey
+from .answer import *
+from .category import *
+from .question import *
+from .response import *
+from .survey import *
 
-__all__ = ["Category", "Answer", "Category", "Response", "Survey", "Question"]
+# __all__ = ["Category", "Answer", "Category", "Response", "Survey", "Question", "SurveyStatus"]

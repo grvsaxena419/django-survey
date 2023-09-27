@@ -1,4 +1,4 @@
-from datetime import timedelta
+from datetime import timedelta, datetime
 
 from django.conf import settings
 from django.db import models
@@ -9,6 +9,26 @@ from django.utils.translation import gettext_lazy as _
 
 def in_duration_day():
     return now() + timedelta(days=settings.DEFAULT_SURVEY_PUBLISHING_DURATION)
+
+
+class SurveyStatus:
+    DRAFT = 1
+    PUBLISHED = 2
+    EXPIRED = 3
+
+    ICONS = {
+        PUBLISHED: 'fas fa-check',
+        EXPIRED: 'far fa-calendar',
+        DRAFT: 'fas fa-pencil-alt'
+    }
+
+    LABELS = {
+        DRAFT: _('Draft'),
+        PUBLISHED: _('Published'),
+        EXPIRED: _('Expired'),
+    }
+
+    CHOICES = tuple(LABELS.items())
 
 
 class Survey(models.Model):
@@ -24,16 +44,26 @@ class Survey(models.Model):
 
     name = models.CharField(_("Name"), max_length=400)
     description = models.TextField(_("Description"))
-    is_published = models.BooleanField(_("Users can see it and answer it"), default=True)
     need_logged_user = models.BooleanField(_("Only authenticated users can see it and answer it"))
     editable_answers = models.BooleanField(_("Users can edit their answers afterwards"), default=True)
     display_method = models.SmallIntegerField(
         _("Display method"), choices=DISPLAY_METHOD_CHOICES, default=ALL_IN_ONE_PAGE
     )
     template = models.CharField(_("Template"), max_length=255, null=True, blank=True)
-    publish_date = models.DateField(_("Publication date"), blank=True, null=False, default=now)
-    expire_date = models.DateField(_("Expiration date"), blank=True, null=False, default=in_duration_day)
+    expire_date = models.DateField(_("Survey will not be visible after this date"), blank=True, null=False,
+                                   default=in_duration_day)
     redirect_url = models.URLField(_("Redirect URL"), blank=True)
+    # non-user updatable fields
+    tenant_id = models.PositiveIntegerField(_('tenant_id'), blank=True, null=True)
+    created_by_user = models.PositiveIntegerField(_('user id'), blank=True, null=True)
+    status = models.PositiveSmallIntegerField(
+        _('status'),
+        choices=SurveyStatus.CHOICES,
+        default=SurveyStatus.DRAFT,
+        db_index=True
+    )
+    create_date = models.DateTimeField(_('Create date'), auto_now_add=True)
+    update_date = models.DateTimeField(_('Update date'), default=datetime.now)
 
     class Meta:
         verbose_name = _("survey")

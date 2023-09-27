@@ -1,19 +1,25 @@
+{% extends 'base.html' %}
+
+{% load i18n %}
+
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-	<meta charset="utf-8">
-	<title>{% block title %}{% endblock title %}</title>
-    <link rel="icon" href="{% static 'img/favicon.ico'%}"/>
-    <link href="{% static 'survey/css/bootstrap.min.css'%}" rel="stylesheet" type="text/css"/>
-	  <link rel="stylesheet" type="text/css" href="{% static 'survey/css/custom.css' %}" />
+
+<link rel="stylesheet" type="text/css" href="{% static 'survey/css/custom.css' %}" />
+
+
+{% block content %}
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a href="{% url 'user_survey:root' %}">{% trans 'Survey' %}</a></li>
+        </ol>
+
+  </nav>
+
     {% block extracss %}{% endblock %}
-  </head>
-  <body>
     <div class="container" id="wrap">
 	   {% block wrapper %}{% endblock %}
      <div class="well" id="container-main">
-      {% block body %}{% endblock %}
+      {% block localbody %}{% endblock %}
 	   </div>
 	</div>
 	<div class="footer">
@@ -26,5 +32,4 @@
   <script type="text/javascript" src="{% static 'survey/js/bootstrap.min.js' %}"></script>
   <script type="text/javascript" src="{% static 'survey/js/custom.js' %}"></script>
   {% block extrajs %}{% endblock %}
-</body>
-</html>
+{% endblock %}
