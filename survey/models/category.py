@@ -21,3 +21,6 @@ class Category(models.Model):
 
     def slugify(self):
         return slugify(str(self))
+
+    def get_question_set(self):
+        return self.survey.questions.filter(category=self)

@@ -94,3 +94,11 @@ class Survey(models.Model):
 
     def is_all_in_one_page(self):
         return self.display_method == self.ALL_IN_ONE_PAGE
+
+    def is_expired(self):
+        if not self.expire_date:
+            return True
+        return datetime.now().date() > self.expire_date
+
+    def get_all_questions(self):
+        return self.questions.all()
